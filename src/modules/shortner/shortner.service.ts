@@ -3,6 +3,7 @@ import { customAlphabet } from 'nanoid';
 import { UrlShortner } from './shortner.entity';
 import { InjectModel } from '@nestjs/sequelize';
 import normalizeUrl from 'normalize-url';
+import { RedirectCounter } from '../redirectcounter/redirectcounter.entity';
 
 @Injectable()
 export class ShortnerService {
@@ -10,6 +11,8 @@ export class ShortnerService {
   constructor(
     @InjectModel(UrlShortner)
     private urlShortnerModel: typeof UrlShortner,
+    @InjectModel(RedirectCounter)
+    private redirectCounterModel: typeof RedirectCounter,
   ) { }
 
   async shortenUrl(originalUrl: string): Promise<{ shortCode: string, originalUrl: string }> {
@@ -29,12 +32,16 @@ export class ShortnerService {
 
           const urlData = this.getUrlData(originalUrl);
 
-          const { hostname: hostName, protocol } = urlData;
+          const { hostname: hostName, protocol, pathname: pathName } = urlData;
+
+          const searchParams = Object.fromEntries(urlData.searchParams.entries());
 
           await this.urlShortnerModel.create({
             originalUrl,
             shortCode,
             hostName,
+            pathName,
+            searchParams: JSON.stringify(searchParams),
             protocol
           });
 
@@ -63,6 +70,10 @@ export class ShortnerService {
       if (!urlEntry) {
         throw new NotFoundException('Short URL not found');
       }
+
+      await this.redirectCounterModel.create({
+        referenceId: urlEntry.id
+      })
 
       return urlEntry.originalUrl;
     } catch (error) {

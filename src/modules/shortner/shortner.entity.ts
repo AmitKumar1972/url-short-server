@@ -37,6 +37,20 @@ export class UrlShortner extends Model {
   @Column({
     type: DataType.STRING,
     allowNull: false,
+    field: 'path_name',
+  })
+  pathName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'search_params',
+  })
+  searchParams: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
     field: 'protocol',
   })
   protocol: string;

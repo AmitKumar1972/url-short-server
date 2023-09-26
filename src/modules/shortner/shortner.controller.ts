@@ -8,7 +8,7 @@ export class ShortnerController {
 
   @Post('/shorten')
   async shortenUrl(@Body('url') url: string): Promise<{ shortUrl: string, originalUrl: string }> {
-    const serverUrl: string = `http://localhost:3000`;
+    const serverUrl: string | undefined = process.env.DOMAIN_URL;
     const { shortCode, originalUrl } = await this.shortnerService.shortenUrl(url);
 
     return {

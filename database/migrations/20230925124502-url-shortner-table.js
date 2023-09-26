@@ -22,6 +22,14 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      path_name: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
+      search_params: {
+        type: Sequelize.STRING,
+        allowNull: true
+      },
       protocol: {
         type: Sequelize.STRING,
         allowNull: false,

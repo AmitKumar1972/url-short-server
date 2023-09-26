@@ -7,6 +7,7 @@ import { Dialect } from 'sequelize';
 import { ConfigModule } from '@nestjs/config';
 import { ShortnerModule } from './modules/shortner/shortner.module';
 import { UrlShortner } from './modules/shortner/shortner.entity';
+import { RedirectCounter } from './modules/redirectcounter/redirectcounter.entity';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { UrlShortner } from './modules/shortner/shortner.entity';
         DATABASE_PASSWORD: Joi.string(),
         DATABASE_NAME: Joi.string(),
         PORT: Joi.number().default(3000),
+        DOMAIN_URL: Joi.string().default('http://localhost:5000'),
       }),
     }),
     SequelizeModule.forRoot({
@@ -29,7 +31,7 @@ import { UrlShortner } from './modules/shortner/shortner.entity';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [UrlShortner],
+      models: [UrlShortner, RedirectCounter],
       repositoryMode: true,
     }),
     ShortnerModule
