@@ -5,6 +5,8 @@ import { AppService } from './app.service';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { Dialect } from 'sequelize';
 import { ConfigModule } from '@nestjs/config';
+import { ShortnerModule } from './modules/shortner/shortner.module';
+import { UrlShortner } from './modules/shortner/shortner.entity';
 
 @Module({
   imports: [
@@ -27,8 +29,10 @@ import { ConfigModule } from '@nestjs/config';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [],
+      models: [UrlShortner],
+      repositoryMode: true,
     }),
+    ShortnerModule
   ],
   controllers: [AppController],
   providers: [AppService],

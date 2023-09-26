@@ -1,12 +1,29 @@
 import { ShortnerService } from './shortner.service';
-import { Controller, Get } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post, Res } from '@nestjs/common';
+import { Response } from 'express';
 
 @Controller()
 export class ShortnerController {
-  constructor(private readonly shortnerService: ShortnerService) {}
+  constructor(private readonly shortnerService: ShortnerService) { }
 
-  @Get()
-  getHello(): string {
-    return this.shortnerService.getHello();
+  @Post('/shorten')
+  async shortenUrl(@Body('url') url: string): Promise<{ shortUrl: string, originalUrl: string }> {
+    const serverUrl: string = `http://localhost:3000`;
+    const { shortCode, originalUrl } = await this.shortnerService.shortenUrl(url);
+
+    return {
+      shortUrl: `${serverUrl}/${shortCode}`,
+      originalUrl
+    }
+  }
+
+  @Get('/:shortCode')
+  async redirectToOriginalUrl(
+    @Param('shortCode') shortCode: string,
+    @Res() res: Response,
+  ): Promise<void> {
+    const originalUrl = await this.shortnerService.resolveUrl(shortCode);
+
+    return res.redirect(302, originalUrl);
   }
 }

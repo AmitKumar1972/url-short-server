@@ -1,18 +1,45 @@
-import { Column, Table, Model, UpdatedAt, CreatedAt } from 'sequelize-typescript';
+import { Column, Table, Model, UpdatedAt, CreatedAt, DataType } from 'sequelize-typescript';
 
-@Table
-export class UrlShortener extends Model {
-  @Column( {type : 'text'})
+@Table({
+  tableName: 'url_shortner',
+  underscored: true,
+})
+export class UrlShortner extends Model {
+  @Column({
+    type: DataType.UUID,
+    defaultValue: DataType.UUIDV4,
+    primaryKey: true
+  })
   id: string;
 
-  @Column({ type: 'text' })
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'original_url'
+  })
   originalUrl: string;
 
-  @Column({ type: 'text', unique: true })
-  shortUrl: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    unique: true,
+    field: 'short_code'
+  })
+  shortCode: string;
 
-  @Column({ type: 'text' })
-  hostname: string;
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'host_name',
+  })
+  hostName: string;
+
+  @Column({
+    type: DataType.STRING,
+    allowNull: false,
+    field: 'protocol',
+  })
+  protocol: string;
 
   @CreatedAt
   createdAt: Date;

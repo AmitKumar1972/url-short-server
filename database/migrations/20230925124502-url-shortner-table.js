@@ -5,28 +5,32 @@ module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('url_shortner', {
       id: {
+        type: Sequelize.UUID,
         allowNull: false,
-        primaryKey: true,
-        type: Sequelize.STRING,
+        primaryKey: true
       },
-      originalUrl: {
+      original_url: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      shortUrl: {
+      short_code: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      hostname: {
+      host_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      createdAt: {
+      protocol: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE,
       },
