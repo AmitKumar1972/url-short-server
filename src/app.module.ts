@@ -10,6 +10,7 @@ import { UrlShortner } from './modules/shortner/shortner.entity';
 import { RedirectCounter } from './modules/redirectcounter/redirectcounter.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { UserModule } from './modules/user/user.module';
+import { User } from './modules/user/user.entity';
 
 @Module({
   imports: [
@@ -33,7 +34,7 @@ import { UserModule } from './modules/user/user.module';
       username: process.env.DATABASE_USER,
       password: process.env.DATABASE_PASSWORD,
       database: process.env.DATABASE_NAME,
-      models: [UrlShortner, RedirectCounter],
+      models: [UrlShortner, RedirectCounter, User],
       repositoryMode: true,
     }),
     JwtModule.register({
