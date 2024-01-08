@@ -14,6 +14,13 @@ export class UrlShortner extends Model {
 
   @Column({
     type: DataType.STRING,
+    allowNull: true,
+    field: 'user_id'
+  })
+  userId: string;
+
+  @Column({
+    type: DataType.STRING,
     allowNull: false,
     field: 'original_url'
   })

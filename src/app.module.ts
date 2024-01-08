@@ -8,6 +8,8 @@ import { ConfigModule } from '@nestjs/config';
 import { ShortnerModule } from './modules/shortner/shortner.module';
 import { UrlShortner } from './modules/shortner/shortner.entity';
 import { RedirectCounter } from './modules/redirectcounter/redirectcounter.entity';
+import { JwtModule } from '@nestjs/jwt';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
@@ -34,6 +36,13 @@ import { RedirectCounter } from './modules/redirectcounter/redirectcounter.entit
       models: [UrlShortner, RedirectCounter],
       repositoryMode: true,
     }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: {
+        expiresIn: '2d'
+      },
+    }),
+    UserModule,
     ShortnerModule
   ],
   controllers: [AppController],

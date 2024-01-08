@@ -3,38 +3,22 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('url_shortner', {
+    await queryInterface.createTable('user', {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
         primaryKey: true
       },
-      user_id : {
+      name : {
         type: Sequelize.STRING,
-        allowNull: true
+        allowNull: false
       },
-      original_url: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      short_code: {
+      user_name: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
       },
-      host_name: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
-      path_name: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      search_params: {
-        type: Sequelize.STRING,
-        allowNull: true
-      },
-      protocol: {
+      password: {
         type: Sequelize.STRING,
         allowNull: false,
       },
@@ -50,6 +34,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('url_shortner');
+    await queryInterface.dropTable('user');
   },
 };
