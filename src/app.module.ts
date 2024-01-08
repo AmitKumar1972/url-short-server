@@ -43,7 +43,6 @@ import { User } from './modules/user/user.entity';
       signOptions: {
         expiresIn: '1h',
         algorithm: 'HS256',
-        issuer: 'glue-auth',
       },
     }),
     UserModule,
