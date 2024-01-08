@@ -38,13 +38,16 @@ import { User } from './modules/user/user.entity';
       repositoryMode: true,
     }),
     JwtModule.register({
-      secret: process.env.JWT_SECRET,
+      global: true,
+      secret: process.env.JWT_SECRET || 'url-secret',
       signOptions: {
-        expiresIn: '2d'
+        expiresIn: '1h',
+        algorithm: 'HS256',
+        issuer: 'glue-auth',
       },
     }),
     UserModule,
-    ShortnerModule
+    ShortnerModule,
   ],
   controllers: [AppController],
   providers: [AppService],
