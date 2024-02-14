@@ -67,6 +67,8 @@ export class ShortnerService {
         where: { shortCode },
       });
 
+      console.log(urlEntry,'edjwejjd');
+
       if (!urlEntry) {
         throw new NotFoundException('Short URL not found');
       }
